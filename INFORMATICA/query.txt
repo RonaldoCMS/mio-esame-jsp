@@ -1,0 +1,13 @@
+
+--Elenco dei clienti (nome ed indirizzo) che hanno fatto almeno 10 ordini dall’inizio del corrente anno
+SELECT c.name, o.address, count(*) as orders FROM orders o
+	INNER JOIN custumers c ON o.id_custumers = c.id
+	GROUP BY c.name
+
+--Per ogni agente, la somma degli importi di tutti gli ordini acquisiti
+SELECT a.name, a.surname, sum(o.final_price) FROM orders o
+	INNER JOIN agents a ON o.id_agent = a.id
+	GROUP BY a.id
+
+--Elenco delle provincie nelle quali non è stato raccolto nessun ordine
+SELECT city FROM cities c WHERE NOT EXISTS (SELECT * FROM orders o where o.city = c.id)
